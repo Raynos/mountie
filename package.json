@@ -1,0 +1,44 @@
+{
+    "name" : "mountie",
+    "version" : "0.0.0",
+    "description" : "compose web servers behind mount paths",
+    "main" : "index.js",
+    "bin" : {},
+    "directories" : {
+        "example" : "example",
+        "test" : "test"
+    },
+    "dependencies" : {
+        "deck" : "~0.0.2",
+        "is" : "~0.1.5",
+        "bouncy" : "~1.3.1",
+        "merge" : "~1.0.0"
+    },
+    "devDependencies" : {
+        "tap" : "~0.2.5",
+        "seaport" : "~0.7.5"
+    },
+    "scripts" : {
+        "test" : "tap test/*.js"
+    },
+    "repository" : {
+        "type" : "git",
+        "url" : "git://github.com/substack/mountie.git"
+    },
+    "homepage" : "https://github.com/substack/mountie",
+    "keywords" : [
+        "web",
+        "http",
+        "service",
+        "registry",
+        "seaport",
+        "application"
+    ],
+    "author" : {
+        "name" : "James Halliday",
+        "email" : "mail@substack.net",
+        "url" : "http://substack.net"
+    },
+    "license" : "MIT",
+    "engine" : { "node" : ">=0.6" }
+}
