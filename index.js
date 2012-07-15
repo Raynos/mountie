@@ -14,7 +14,7 @@ module.exports = function (ports, opts) {
             }
         }
         
-        handler(ports, req, bounce);
+        handler(ports, opts, req, bounce);
     });
     
     var hooks = [];
@@ -44,28 +44,15 @@ module.exports = function (ports, opts) {
     return server;
 };
  
-function handler (ports, req, bounce) {
+function handler (ports, opts, req, bounce) {
     function error (code, msg) {
         var res = bounce.respond();
         res.writeHead(code, { 'content-type' : 'text/plain' })
         res.end(msg + '\r\n');
     }
     
-    var host = req.headers.host;
-    if (/^www\./.test(host)) {
-        var r = bounce.respond()
-        r.writeHead(302, {
-            location : 'http://' + host.replace(/^www\./, ''),
-            'content-type' : 'text/plain',
-        })
-        r.end();
-        return;
-    }
-    
-    var subdomain = (host || 'browserling.com')
-        .split('.').slice(0,-2).join('.')
-        || 'browserling'
-    ;
+    var host = req.headers.host || '';
+    var subdomain = host.split('.').slice(0,-2).join('.');
     
     req.on('error', function () { req.socket.destroy() });
     req.socket.on('error', function () { req.socket.destroy() });
