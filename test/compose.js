@@ -23,6 +23,7 @@ var server0 = http.createServer(function (req, res) {
 });
 
 var server1 = http.createServer(function (req, res) {
+    res.setHeader('original-url', req.url);
     res.end('boop\n');
 });
 
@@ -35,7 +36,7 @@ p1.service('web.localhost', { mount : '/beep' }, function (port, ready) {
 });
 
 test('compose', function (t) {
-    t.plan(3);
+    t.plan(4);
     
     setTimeout(function () {
         request('http://localhost:' + port.web, function (e, r, b) {
@@ -43,6 +44,7 @@ test('compose', function (t) {
         });
         
         request('http://localhost:' + port.web + '/beep', function (e, r, b) {
+            t.equal(r.headers['original-url'], '/');
             t.equal(b, 'boop\n');
         });
         
