@@ -1,7 +1,7 @@
 {
     "name" : "mountie",
     "version" : "0.0.0",
-    "description" : "compose web servers behind mount paths",
+    "description" : "compose web servers behind host headers and mount paths",
     "main" : "index.js",
     "bin" : {},
     "directories" : {

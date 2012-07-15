@@ -1,8 +1,8 @@
 # mountie
 
-Compose many web server processes into cohesive applications by mounting web
-services registered with [seaport](https://github.com/substack/seaport) at
-mount paths.
+Compose web servers behind host headers and mount paths
+using [seaport](https://github.com/substack/seaport)
+and [bouncy](https://github.com/substack/bouncy).
 
 # example
 
