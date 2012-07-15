@@ -96,6 +96,10 @@ then for services registered as `opts.prefix + '.' + req.headers.host`
 and a `mount` field, then for services without a mount field but a matching
 host prefix.
 
+When you mount web servers with the `mount` field, the leading mount value gets
+sliced off the `req.url` so that you can more easily juggle mounted servers
+around without changing the mount values in as many places.
+
 All other `opts` are passed directly to
 [bouncy](https://github.com/substack/bouncy).
 
