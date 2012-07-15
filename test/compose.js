@@ -35,6 +35,22 @@ p1.service('web.localhost', { mount : '/beep' }, function (port, ready) {
 });
 
 test('compose', function (t) {
+    t.plan(3);
+    
+    setTimeout(function () {
+        request('http://localhost:' + port.web, function (e, r, b) {
+            t.equal(b, 'hello cruel world\n');
+        });
+        
+        request('http://localhost:' + port.web + '/beep', function (e, r, b) {
+            t.equal(b, 'boop\n');
+        });
+        
+        request('http://localhost:' + port.web + '/xyz', function (e, r, b) {
+            t.equal(b, 'hello cruel world\n');
+        });
+    }, 500);
+    
     t.on('end', function () {
         ports.close();
         p0.close();
@@ -43,8 +59,4 @@ test('compose', function (t) {
         server0.close();
         server1.close();
     });
-    
-    setTimeout(function () {
-        t.end();
-    }, 1000);
 }); 
