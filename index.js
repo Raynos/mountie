@@ -6,6 +6,7 @@ var merge = require('merge');
 
 module.exports = function (ports, opts) {
     if (!opts) opts = {};
+    if (!opts.prefix) opts.prefix = 'web';
     
     var server = bouncy(opts, function (req, bounce) {
         for (var i = 0; i < hooks.length; i++) {
@@ -29,9 +30,16 @@ module.exports = function (ports, opts) {
                 return params(req);
             }
             
+            if (params.method
+            && params.method.toUpperCase() !== req.method) {
+                return false;
+            }
+            
             if (isRegExp(params.path)) {
                 return params.path.test(req.url);
             }
+            
+            if (params.path === undefined) return true;
             
             var u = req.url.slice(0, params.path.length);
             var c = req.url.charAt(params.path.length);
@@ -51,13 +59,12 @@ function handler (ports, opts, req, bounce) {
         res.end(msg + '\r\n');
     }
     
-    var host = req.headers.host || '';
-    var subdomain = host.split('.').slice(0,-2).join('.');
+    var host = (req.headers.host || '').split(':')[0];
     
     req.on('error', function () { req.socket.destroy() });
     req.socket.on('error', function () { req.socket.destroy() });
     
-    var ps = ports.query('web.' + subdomain);
+    var ps = ports.query(opts.prefix + '.' + host);
     var mounts = ps.filter(function (p) {
         if (typeof p.mount !== 'string') return false;
         
