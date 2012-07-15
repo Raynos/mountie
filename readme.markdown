@@ -4,6 +4,8 @@ Compose web servers behind host headers and mount paths
 using [seaport](https://github.com/substack/seaport)
 and [bouncy](https://github.com/substack/bouncy).
 
+[![build status](https://secure.travis-ci.org/substack/mountie.png)](http://travis-ci.org/substack/mountie)
+
 # example
 
 First write a mountie hub:
